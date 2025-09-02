@@ -9,7 +9,6 @@ const API = axios.create({
   },
 });
 
-// типи запитів/відповідей — ТУТ
 export interface FetchNotesParams {
   page: number;
   perPage: number;

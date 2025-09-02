@@ -1,6 +1,5 @@
 import { Formik, Form, Field, ErrorMessage as FMError } from "formik";
 import * as Yup from "yup";
-import styles from "./NoteForm.module.css";
 import type { NoteTag } from "../../types/note";
 import type { CreateNotePayload } from "../../services/noteService";
 
@@ -30,55 +29,36 @@ export default function NoteForm({
       onSubmit={(values) => onSubmit(values)}
     >
       {({ isValid }) => (
-        <Form className={styles.form}>
-          <div className={styles.formGroup}>
+        <Form>
+          <div>
             <label htmlFor="title">Title</label>
-            <Field
-              id="title"
-              name="title"
-              type="text"
-              className={styles.input}
-            />
-            <FMError name="title" component="span" className={styles.error} />
+            <Field id="title" name="title" type="text" />
+            <FMError name="title" component="span" />
           </div>
 
-          <div className={styles.formGroup}>
+          <div>
             <label htmlFor="content">Content</label>
-            <Field
-              id="content"
-              name="content"
-              as="textarea"
-              rows={8}
-              className={styles.textarea}
-            />
-            <FMError name="content" component="span" className={styles.error} />
+            <Field id="content" name="content" as="textarea" rows={6} />
+            <FMError name="content" component="span" />
           </div>
 
-          <div className={styles.formGroup}>
+          <div>
             <label htmlFor="tag">Tag</label>
-            <Field id="tag" name="tag" as="select" className={styles.select}>
+            <Field id="tag" name="tag" as="select">
               {TAGS.map((t) => (
                 <option key={t} value={t}>
                   {t}
                 </option>
               ))}
             </Field>
-            <FMError name="tag" component="span" className={styles.error} />
+            <FMError name="tag" component="span" />
           </div>
 
-          <div className={styles.actions}>
-            <button
-              type="button"
-              className={styles.cancelButton}
-              onClick={onCancel}
-            >
+          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <button type="button" onClick={onCancel}>
               Cancel
             </button>
-            <button
-              type="submit"
-              className={styles.submitButton}
-              disabled={!isValid || submitting}
-            >
+            <button type="submit" disabled={!isValid || submitting}>
               Create note
             </button>
           </div>

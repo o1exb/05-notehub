@@ -1,4 +1,3 @@
-import styles from "./Loader.module.css";
 export default function Loader() {
-  return <p className={styles.text}>Loading, please wait…</p>;
+  return <p>Loading…</p>;
 }
