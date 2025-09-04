@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
+import css from "./Modal.module.css";
 
 export interface ModalProps {
   onClose: () => void;
@@ -24,23 +25,12 @@ export default function Modal({ onClose, children }: ModalProps) {
 
   return createPortal(
     <div
+      className={css.backdrop}
       role="dialog"
       aria-modal="true"
       onClick={onClose}
-      style={{
-        position: "fixed",
-        inset: 0,
-        background: "rgba(0,0,0,0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: 16,
-      }}
     >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        style={{ background: "#fff", padding: 16, borderRadius: 8, width: 480 }}
-      >
+      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
         {children}
       </div>
     </div>,

@@ -6,7 +6,7 @@ import {
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
-import ReactPaginate from "react-paginate";
+import Pagination from "../Pagination/Pagination";
 
 import SearchBox from "../SearchBox/SearchBox";
 import NoteList from "../NoteList/NoteList";
@@ -22,6 +22,8 @@ import {
   type FetchNotesResponse,
   type CreateNotePayload,
 } from "../../services/noteService";
+
+import css from "./App.module.css";
 
 export default function App() {
   const [page, setPage] = useState(1);
@@ -50,6 +52,7 @@ export default function App() {
     mutationFn: (payload: CreateNotePayload) => createNote(payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
+      setPage(1);
       setModalOpen(false);
     },
   });
@@ -65,23 +68,21 @@ export default function App() {
   const totalPages = data?.totalPages ?? 0;
 
   return (
-    <div style={{ padding: 16 }}>
-      <header style={{ display: "flex", gap: 12, alignItems: "center" }}>
+    <div className={css.app}>
+      <header className={css.toolbar}>
         <SearchBox value={search} onChange={setSearch} />
 
         {totalPages > 1 && (
-          <ReactPaginate
+          <Pagination
             pageCount={totalPages}
-            pageRangeDisplayed={5}
-            marginPagesDisplayed={1}
-            onPageChange={({ selected }) => setPage(selected + 1)}
-            forcePage={page - 1}
-            nextLabel="→"
-            previousLabel="←"
+            currentPage={page}
+            onPageChange={setPage}
           />
         )}
 
-        <button onClick={() => setModalOpen(true)}>Create note +</button>
+        <button className={css.button} onClick={() => setModalOpen(true)}>
+          Create note +
+        </button>
       </header>
 
       {(isLoading || isFetching) && <Loader />}

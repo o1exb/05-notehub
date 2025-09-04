@@ -2,6 +2,7 @@ import { Formik, Form, Field, ErrorMessage as FMError } from "formik";
 import * as Yup from "yup";
 import type { NoteTag } from "../../types/note";
 import type { CreateNotePayload } from "../../services/noteService";
+import css from "./NoteForm.module.css";
 
 const TAGS: NoteTag[] = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
 
@@ -29,36 +30,50 @@ export default function NoteForm({
       onSubmit={(values) => onSubmit(values)}
     >
       {({ isValid }) => (
-        <Form>
-          <div>
+        <Form className={css.form}>
+          <div className={css.formGroup}>
             <label htmlFor="title">Title</label>
-            <Field id="title" name="title" type="text" />
-            <FMError name="title" component="span" />
+            <Field id="title" name="title" type="text" className={css.input} />
+            <FMError name="title" component="span" className={css.error} />
           </div>
 
-          <div>
+          <div className={css.formGroup}>
             <label htmlFor="content">Content</label>
-            <Field id="content" name="content" as="textarea" rows={6} />
-            <FMError name="content" component="span" />
+            <Field
+              id="content"
+              name="content"
+              as="textarea"
+              rows={8}
+              className={css.textarea}
+            />
+            <FMError name="content" component="span" className={css.error} />
           </div>
 
-          <div>
+          <div className={css.formGroup}>
             <label htmlFor="tag">Tag</label>
-            <Field id="tag" name="tag" as="select">
+            <Field id="tag" name="tag" as="select" className={css.select}>
               {TAGS.map((t) => (
                 <option key={t} value={t}>
                   {t}
                 </option>
               ))}
             </Field>
-            <FMError name="tag" component="span" />
+            <FMError name="tag" component="span" className={css.error} />
           </div>
 
-          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-            <button type="button" onClick={onCancel}>
+          <div className={css.actions}>
+            <button
+              type="button"
+              className={css.cancelButton}
+              onClick={onCancel}
+            >
               Cancel
             </button>
-            <button type="submit" disabled={!isValid || submitting}>
+            <button
+              type="submit"
+              className={css.submitButton}
+              disabled={!isValid || submitting}
+            >
               Create note
             </button>
           </div>
